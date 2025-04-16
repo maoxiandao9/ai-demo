@@ -27,5 +27,16 @@ public class SpringAiDemoApplication {
         SpringApplication.run(SpringAiDemoApplication.class, args);
     }
 
+    @Bean
+    CommandLineRunner ingestTermOfServiceToVectorStore(EmbeddingModel embeddingModel, VectorStore vectorStore,
+                                                       @Value("classpath:rag/terms-of-service.txt") Resource termsOfServiceDocs) {
 
+        return args -> {
+            vectorStore.write(                                  // 3.写入
+                    new TokenTextSplitter().transform(          // 2.转换
+                            new TextReader(termsOfServiceDocs).read())  // 1.读取
+            );
+
+        };
+    }
 }

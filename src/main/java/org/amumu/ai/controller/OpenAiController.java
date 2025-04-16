@@ -4,7 +4,10 @@ import org.amumu.ai.services.LoggingAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.vectorstore.SearchRequest;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +30,7 @@ public class OpenAiController  {
 
     private final ChatClient chatClient;
 
-    public OpenAiController(ChatClient.Builder chatClientBuilder, ChatMemory chatMemory) {
+    public OpenAiController(ChatClient.Builder chatClientBuilder, ChatMemory chatMemory, VectorStore vectorStore) {
         this.chatClient = chatClientBuilder.defaultSystem(
 			   """
 					    您是“Amumu”航空公司的客户聊天支持代理。请以友好、乐于助人且愉快的方式来回复。
@@ -38,7 +41,9 @@ public class OpenAiController  {
                         在更改或退订之前，请先获取预定信息并且用户确定之后才进行更改或退订。
                         请讲中文。
                         今天的日期是 {current_date}.
-				   	""").defaultAdvisors(new PromptChatMemoryAdvisor(chatMemory)
+				   	""").defaultAdvisors(
+                               new PromptChatMemoryAdvisor(chatMemory),
+                               new QuestionAnswerAdvisor(vectorStore, SearchRequest.builder().build())
 //                , loggingAdvisor)
         ).defaultFunctions("cancelBooking","getBookingDetails").build();
     }
