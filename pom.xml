@@ -12,6 +12,7 @@
 
     <modules>
         <module>flight-booking</module>
+        <module>spring-ai-demos</module>
     </modules>
 
     <properties>
