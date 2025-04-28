@@ -13,6 +13,8 @@
     <modules>
         <module>flight-booking</module>
         <module>spring-ai-demos</module>
+        <module>mcp-server</module>
+        <module>mcp-stdio-server</module>
     </modules>
 
     <properties>
