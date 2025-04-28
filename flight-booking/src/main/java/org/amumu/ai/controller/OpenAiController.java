@@ -44,10 +44,13 @@ public class OpenAiController  {
                         今天的日期是 {current_date}.
 				   	""").defaultAdvisors(
                                new PromptChatMemoryAdvisor(chatMemory),
+                               new LoggingAdvisor(),
                                new QuestionAnswerAdvisor(vectorStore, SearchRequest.builder().build())
-//                , loggingAdvisor)
-        ).defaultFunctions("cancelBooking","getBookingDetails").build();
+                    ).defaultFunctions("cancelBooking","getBookingDetails").build();
     }
+
+//    @Autowired
+//    private VectorStore vectorStore;
 
     @CrossOrigin
     @GetMapping(value = "/ai/generateStreamAsString", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -56,6 +59,11 @@ public class OpenAiController  {
                 .user(message)
                 .system(promptSystemSpec -> promptSystemSpec.param("current_date", LocalDate.now().toString()))
                 .advisors(advisorSpec -> advisorSpec.param(AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100))
+//                .advisors(new QuestionAnswerAdvisor(vectorStore,
+//
+//                        SearchRequest.builder().query(message)
+//                                .similarityThreshold(0.6)
+//                                .build()))
                 .stream()
                 .content();
         return content.concatWith(Flux.just("[complete]"));
