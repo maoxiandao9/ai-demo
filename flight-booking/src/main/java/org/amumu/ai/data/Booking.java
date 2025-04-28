@@ -10,18 +10,18 @@ public class Booking {
 
 	private LocalDate bookingTo;
 
-	private org.amumu.ai.data.Customer customer;
+	private Customer customer;
 
 	private String from;
 
 	private String to;
 
-	private org.amumu.ai.data.BookingStatus bookingStatus;
+	private BookingStatus bookingStatus;
 
-	private org.amumu.ai.data.BookingClass bookingClass;
+	private BookingClass bookingClass;
 
-	public Booking(String bookingNumber, LocalDate date, org.amumu.ai.data.Customer customer, org.amumu.ai.data.BookingStatus bookingStatus, String from,
-				   String to, org.amumu.ai.data.BookingClass bookingClass) {
+	public Booking(String bookingNumber, LocalDate date, Customer customer, BookingStatus bookingStatus, String from,
+				   String to, BookingClass bookingClass) {
 		this.bookingNumber = bookingNumber;
 		this.date = date;
 		this.customer = customer;
@@ -55,19 +55,19 @@ public class Booking {
 		this.bookingTo = bookingTo;
 	}
 
-	public org.amumu.ai.data.Customer getCustomer() {
+	public Customer getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(org.amumu.ai.data.Customer customer) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
-	public org.amumu.ai.data.BookingStatus getBookingStatus() {
+	public BookingStatus getBookingStatus() {
 		return bookingStatus;
 	}
 
-	public void setBookingStatus(org.amumu.ai.data.BookingStatus bookingStatus) {
+	public void setBookingStatus(BookingStatus bookingStatus) {
 		this.bookingStatus = bookingStatus;
 	}
 
@@ -87,11 +87,11 @@ public class Booking {
 		this.to = to;
 	}
 
-	public org.amumu.ai.data.BookingClass getBookingClass() {
+	public BookingClass getBookingClass() {
 		return bookingClass;
 	}
 
-	public void setBookingClass(org.amumu.ai.data.BookingClass bookingClass) {
+	public void setBookingClass(BookingClass bookingClass) {
 		this.bookingClass = bookingClass;
 	}
 
